@@ -1,6 +1,8 @@
 package com.devsenior.campusflow.usuarios.service;
 
 import java.util.List;
+import com.devsenior.campusflow.cursos.dto.CursoResponse;
+import com.devsenior.campusflow.cursos.mapper.CursoMapper;
 import java.util.stream.Collectors;
 import com.devsenior.campusflow.common.exception.EmailDuplicadoException;
 import com.devsenior.campusflow.common.exception.ResourceNotFoundException;
@@ -72,6 +74,14 @@ public class UsuarioService {
 
         Usuario actualizado = usuarioRepository.save(usuario);
         return UsuarioMapper.toResponse(actualizado);
+    }
+
+    public List<CursoResponse> listarCursosDictados(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No existe un usuario con id " + id));
+        return usuario.getCursosDictados().stream()
+                .map(CursoMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     public void eliminar(Long id) {

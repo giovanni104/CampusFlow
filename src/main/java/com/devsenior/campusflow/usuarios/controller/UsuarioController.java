@@ -1,6 +1,7 @@
 package com.devsenior.campusflow.usuarios.controller;
 
 import java.util.List;
+import com.devsenior.campusflow.cursos.dto.CursoResponse;
 import com.devsenior.campusflow.usuarios.dto.ActualizarUsuarioRequest;
 import com.devsenior.campusflow.usuarios.dto.CrearUsuarioRequest;
 import com.devsenior.campusflow.usuarios.dto.UsuarioResponse;
@@ -46,6 +47,11 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public UsuarioResponse actualizar(@PathVariable Long id, @Valid @RequestBody ActualizarUsuarioRequest request) {
         return usuarioService.actualizar(id, request);
+    }
+
+    @GetMapping("/{id}/cursos-dictados")
+    public List<CursoResponse> listarCursosDictados(@PathVariable Long id) {
+        return usuarioService.listarCursosDictados(id);
     }
 
     @DeleteMapping("/{id}")
